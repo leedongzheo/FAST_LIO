@@ -7,8 +7,8 @@ from launch_ros.actions import Node
 def generate_launch_description():
     config_arg = DeclareLaunchArgument(
         'config',
-        default_value='config/avia.yaml',
-        description='FAST_LIO config for City02 (default: Avia).'
+        default_value='config/city02.yaml',
+        description='FAST_LIO config for City02 (default: city02).'
     )
 
     fastlio = Node(
