@@ -214,6 +214,9 @@ Furthermore, the extrinsic transformation between the IMU and LiDAR sensors can 
 [City01](https://drive.google.com/file/d/1rKfdp3aeFdZUmiZZooR8F69rEITCDzRO/view?usp=sharing) (28.52GB, 1309sec) : This sequence features many rotations and u-turns, causing localization failure. Furthremore, it is the longest sequence of city datasets.
 
 #### 4.3.2. City02 sequence
+
+> ROS2 users: xem hướng dẫn chạy chi tiết theo từng terminal tại **[How_to_file_city02.md](How_to_file_city02.md)** (bao gồm bước convert ROS1 bag -> ROS2 bag).
+
 <p align="center">
   <img width="712pix" src="figs/City02.png">
 </p>
