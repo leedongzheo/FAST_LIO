@@ -274,3 +274,8 @@ The main structure of this UAV is 3d printed (Aluminum or PLA), the .stl file wi
 ## 6.Acknowledgments
 
 Thanks for LOAM(J. Zhang and S. Singh. LOAM: Lidar Odometry and Mapping in Real-time), [Livox_Mapping](https://github.com/Livox-SDK/livox_mapping), [LINS](https://github.com/ChaoqinRobotics/LINS---LiDAR-inertial-SLAM) and [Loam_Livox](https://github.com/hku-mars/loam_livox).
+
+
+## ROS2 Jazzy (Ubuntu 24.04) migration status
+
+This branch introduces ROS 2 Jazzy build/packaging scaffolding (`ament_cmake`, ROS 2 package manifest, and Python launch file). The core source code still uses ROS 1 APIs and requires follow-up refactoring to complete runtime migration.
