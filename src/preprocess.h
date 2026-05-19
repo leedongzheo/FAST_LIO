@@ -95,7 +95,7 @@ class Preprocess
   void process(const sensor_msgs::msg::PointCloud2::SharedPtr msg, PointCloudXYZI::Ptr &pcl_out);
   void set(bool feat_en, int lid_type, double bld, int pfilt_num);
 
-  // sensor_msgs::PointCloud2::ConstPtr pointcloud;
+  // sensor_msgs::msg::PointCloud2::ConstSharedPtr pointcloud;
   PointCloudXYZI pl_full, pl_corn, pl_surf;
   PointCloudXYZI pl_buff[128]; //maximum 128 line lidar
   vector<orgtype> typess[128]; //maximum 128 line lidar
