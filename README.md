@@ -79,7 +79,7 @@ Follow [livox_ros_driver Installation](https://github.com/Livox-SDK/livox_ros_dr
 
 *Remarks:*
 - Since the FAST-LIO must support Livox serials LiDAR firstly, so the **livox_ros_driver** must be installed and **sourced** before run any FAST-LIO luanch file.
-- How to source? The easiest way is add the line ``` source $Livox_ros_driver_dir$/devel/setup.bash ``` to the end of file ``` ~/.bashrc ```, where ``` $Livox_ros_driver_dir$ ``` is the directory of the livox ros driver workspace (should be the ``` ws_livox ``` directory if you completely followed the livox official document).
+- How to source? The easiest way is add the line ``` source $LIVOX_ROS2_WS$/install/setup.bash ``` to the end of file ``` ~/.bashrc ```, where ``` $Livox_ros_driver_dir$ ``` is the directory of the livox ros driver workspace (should be the ``` ws_livox ``` directory if you completely followed the livox official document).
 
 
 ## 2. Build
@@ -135,7 +135,7 @@ execute the following command to download the image and create the container.
 - Subsequently, a folder with the same name inside the Docker container will receive this file. Users can then easily play the file within Docker.
 - In this example, we've shared the network of the host machine with the Docker container. Consequently, if users execute the ``` rostopic list ``` command, they will observe identical output whether they run it on the host machine or inside the Docker container."
 ### 2.2 Build from source
-Clone the repository and catkin_make:
+Clone the repository and colcon build --packages-select fast_lio:
 
 ```
     cd ~/$A_ROS_DIR$/src
@@ -143,8 +143,8 @@ Clone the repository and catkin_make:
     cd FAST_LIO
     git submodule update --init
     cd ../..
-    catkin_make
-    source devel/setup.bash
+    colcon build --packages-select fast_lio
+    source install/setup.bash
 ```
 - Remember to source the livox_ros_driver before build (follow 1.3 **livox_ros_driver**)
 - If you want to use a custom build of PCL, add the following line to ~/.bashrc
@@ -162,9 +162,9 @@ C. We recommend to set the **extrinsic_est_en** to false if the extrinsic is giv
 Connect to your PC to Livox Avia LiDAR by following  [Livox-ros-driver installation](https://github.com/Livox-SDK/livox_ros_driver), then
 ```
     cd ~/$FAST_LIO_ROS_DIR$
-    source devel/setup.bash
-    roslaunch fast_lio mapping_avia.launch
-    roslaunch livox_ros_driver livox_lidar_msg.launch
+    source install/setup.bash
+    ros2 launch fast_lio mapping_avia.launch.py
+    # ROS2: run Livox driver launch from its ROS2 package (livox_ros_driver2)
 ```
 - For livox serials, FAST-LIO only support the data collected by the ``` livox_lidar_msg.launch ``` since only its ``` livox_ros_driver/CustomMsg ``` data structure produces the timestamp of each LiDAR point which is very important for the motion undistortion. ``` livox_lidar.launch ``` can not produce it right now.
 - If you want to change the frame rate, please modify the **publish_freq** parameter in the [livox_lidar_msg.launch](https://github.com/Livox-SDK/livox_ros_driver/blob/master/livox_ros_driver/launch/livox_lidar_msg.launch) of [Livox-ros-driver](https://github.com/Livox-SDK/livox_ros_driver) before make the livox_ros_driver pakage.
@@ -199,8 +199,8 @@ Edit ``` config/velodyne.yaml ``` to set the below parameters:
 Step B: Run below
 ```
     cd ~/$FAST_LIO_ROS_DIR$
-    source devel/setup.bash
-    roslaunch fast_lio mapping_velodyne.launch
+    source install/setup.bash
+    ros2 launch fast_lio mapping_velodyne.launch.py
 ```
 
 Step C: Run LiDAR's ros driver or play rosbag.
@@ -211,13 +211,13 @@ Install MARSIM: https://github.com/hku-mars/MARSIM and run MARSIM as below
 
 ```
 cd ~/$MARSIM_ROS_DIR$
-roslaunch test_interface single_drone_avia.launch
+# ROS2: launch marsim/test interface with ros2 launch from the corresponding ROS2 package
 ```
 
 Then Run FAST-LIO:
 
 ```
-roslaunch fast_lio mapping_marsim.launch
+ros2 launch fast_lio mapping_marsim.launch.py
 ```
 
 ### 3.5 PCD file save
@@ -244,7 +244,7 @@ Files: Can be downloaded from [google drive](https://drive.google.com/drive/fold
 
 Run:
 ```
-roslaunch fast_lio mapping_avia.launch
+ros2 launch fast_lio mapping_avia.launch.py
 rosbag play YOUR_DOWNLOADED.bag
 
 ```
@@ -257,7 +257,7 @@ We produce [Rosbag Files](https://drive.google.com/drive/folders/1blQJuAB4S80NwZ
     
 Run:
 ```
-roslaunch fast_lio mapping_velodyne.launch
+ros2 launch fast_lio mapping_velodyne.launch.py
 rosbag play YOUR_DOWNLOADED.bag
 ```
 
@@ -278,4 +278,4 @@ Thanks for LOAM(J. Zhang and S. Singh. LOAM: Lidar Odometry and Mapping in Real-
 
 ## ROS2 Jazzy (Ubuntu 24.04) migration status
 
-This branch introduces ROS 2 Jazzy build/packaging scaffolding (`ament_cmake`, ROS 2 package manifest, and Python launch file). The core source code still uses ROS 1 APIs and requires follow-up refactoring to complete runtime migration.
+This branch introduces ROS 2 Jazzy build/packaging scaffolding (`ament_cmake`, ROS 2 package manifest, and Python launch file). The core runtime source has been migrated to ROS 2 APIs (rclcpp, ROS 2 messages, tf2).
