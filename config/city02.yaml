@@ -1,0 +1,38 @@
+common:
+    # Default ROS2 topics for City02 after conversion/replay.
+    # Adjust if your bag uses different names.
+    lid_topic:  "/livox/avia/points"
+    imu_topic:  "/xsens_imu_data"
+    time_sync_en: false
+    time_offset_lidar_to_imu: 0.0
+
+preprocess:
+    lidar_type: 1               # 1: Livox, 2: Velodyne, 3: Ouster
+    scan_line: 6
+    blind: 0
+
+mapping:
+    # Tuned from MA-LIO City setup (single-lidar ROS2 fast_lio fallback)
+    acc_cov: 0.011197412605492375
+    gyr_cov: 0.010270904839480961
+    b_acc_cov: 0.00011751767903346351
+    b_gyr_cov: 0.000091355383994881894
+    fov_degree: 90
+    det_range: 100.0
+    extrinsic_est_en: false
+    # NOTE: fast_lio uses a single IMU<->LiDAR extrinsic.
+    # Replace these with your calibrated Avia<->IMU extrinsic if needed.
+    extrinsic_T: [0.215, 0.0, 0.018]
+    extrinsic_R: [1, 0, 0,
+                  0, 1, 0,
+                  0, 0, 1]
+
+publish:
+    path_en: true
+    scan_publish_en: true
+    dense_publish_en: true
+    scan_bodyframe_pub_en: true
+
+pcd_save:
+    pcd_save_en: true
+    interval: -1
